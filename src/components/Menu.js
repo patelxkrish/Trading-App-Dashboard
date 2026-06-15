@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
-  const [logoutMessage, setLogoutMessage] = useState("");
   const handleMenuCheck = (index) => {
     setSelectedMenu(index);
   };
   const handleLogout = () => {
-    // Clear tokens or any user data
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("username");
 
-    setLogoutMessage("You have been logged out successfully.");
+    window.location.href = "https://trading-app-fronted.vercel.app";
   };
 
   const menuClass = "menu";
@@ -92,15 +90,9 @@ const Menu = () => {
         </ul>
         <hr />
         <div className="logout">
-          <button
-            className="btn btn-danger w-100 py-2 fw-semibold"
-            onClick={handleLogout}
-          >
+          <button type="button" class="btn btn-warning" onClick={handleLogout}>
             Logout
           </button>
-          {logoutMessage && (
-            <div className="alert alert-info mt-3">{logoutMessage}</div>
-          )}
         </div>
       </div>
     </div>

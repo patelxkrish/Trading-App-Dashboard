@@ -841,3 +841,108 @@ hr {
 .action:hover {
   background-color: rgb(212, 212, 212);
 }
+
+.logout {
+  color: #fff; /* White text */
+  background-color: #dc3545; /* Danger red */
+  border: 1px solid #dc3545;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.logout:hover {
+  color: #fff;
+  background-color: #c82333; /* Darker red on hover */
+  border-color: #bd2130;
+}
+
+.logout:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+}
+
+.logout:active {
+  color: #fff;
+  background-color: #bd2130; /* Even darker red when pressed */
+  border-color: #b21f2d;
+}
+
+/* Search section wrapper */
+.search-section {
+  background: #f9f9f9;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.search-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Search bar container */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition:
+    border 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.search:focus {
+  border-color: #4184f3;
+  box-shadow: 0 0 6px rgba(65, 132, 243, 0.4);
+}
+
+.counts {
+  margin-left: 12px;
+  font-size: 0.85rem;
+  color: #666;
+}
+.portfolio-snapshot {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-snapshot h2 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.summary {
+  margin-top: 20px;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.badge.profit {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.badge.loss {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}

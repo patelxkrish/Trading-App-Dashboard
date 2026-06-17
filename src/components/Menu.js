@@ -76,7 +76,7 @@ const Menu = () => {
               </p>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               style={{ textDecoration: "none" }}
               to="/Apps"
@@ -86,11 +86,11 @@ const Menu = () => {
                 Apps
               </p>
             </Link>
-          </li>
+          </li> */}
         </ul>
         <hr />
         <div className="logout">
-          <button type="button" class="btn btn-warning" onClick={handleLogout}>
+          <button type="button" class="logout" onClick={handleLogout}>
             Logout
           </button>
         </div>

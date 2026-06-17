@@ -1,58 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
 
 const Summary = () => {
+  const [holdings, setHoldings] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    axios
+      .get("https://trading-app-backend-pf6b.onrender.com/allHoldings", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setHoldings(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  // Chart labels and data
+  const labels = holdings.map((stock) => stock.name);
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Current Value (₹)",
+        data: holdings.map((stock) => stock.price * stock.qty),
+        backgroundColor: holdings.map(
+          (stock) =>
+            stock.price * stock.qty - stock.avg * stock.qty >= 0
+              ? "rgba(40, 167, 69, 0.6)" // green for profit
+              : "rgba(220, 53, 69, 0.6)", // red for loss
+        ),
+        borderRadius: 6,
+      },
+    ],
+  };
+
   return (
-    <>
-      <div className="section">
-        <span>
-          <p>Equity</p>
-        </span>
+    <div className="portfolio-snapshot">
+      <h2>Portfolio Snapshot</h2>
+      <Bar data={data} />
 
-        <div className="data">
-          <div className="first">
-            <h3>3.74k</h3>
-            <p>Margin available</p>
-          </div>
-          <hr />
-
-          <div className="second">
-            <p>
-              Margins used <span>0</span>{" "}
+      <div className="summary">
+        {holdings.map((stock, index) => {
+          const currValue = stock.price * stock.qty;
+          const pnl = currValue - stock.avg * stock.qty;
+          return (
+            <p key={index}>
+              {stock.name}:{" "}
+              <span className={pnl >= 0 ? "badge profit" : "badge loss"}>
+                {pnl >= 0
+                  ? `+₹${pnl.toFixed(2)}`
+                  : `-₹${Math.abs(pnl).toFixed(2)}`}
+              </span>
             </p>
-            <p>
-              Opening balance <span>3.74k</span>{" "}
-            </p>
-          </div>
-        </div>
-        <hr className="divider" />
+          );
+        })}
       </div>
-
-      <div className="section">
-        <span>
-          <p>Holdings (13)</p>
-        </span>
-
-        <div className="data">
-          <div className="first">
-            <h3 className="profit">
-              1.55k <small>+5.20%</small>{" "}
-            </h3>
-            <p>P&L</p>
-          </div>
-          <hr />
-
-          <div className="second">
-            <p>
-              Current Value <span>31.43k</span>{" "}
-            </p>
-            <p>
-              Investment <span>29.88k</span>{" "}
-            </p>
-          </div>
-        </div>
-        <hr className="divider" />
-      </div>
-    </>
+    </div>
   );
 };
 

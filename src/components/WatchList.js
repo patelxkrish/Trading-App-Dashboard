@@ -1,28 +1,26 @@
 import React, { useState, useContext } from "react";
-
 import GeneralContext from "./GeneralContext";
-
 import { Tooltip, Grow } from "@mui/material";
-
-import {
-  // BarChartOutlined,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
-  // MoreHoriz,
-} from "@mui/icons-material";
-
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { watchList } from "../data/data";
 import { DoughnutChart } from "./DoughnoutChart";
 
-const labels = watchList.map((subArray) => subArray["name"]);
-
 const WatchList = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter stocks by name based on search term
+  const filteredList = watchList.filter((stock) =>
+    stock.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  const labels = filteredList.map((stock) => stock.name);
+
   const data = {
     labels,
     datasets: [
       {
         label: "Price",
-        data: watchList.map((stock) => stock.price),
+        data: filteredList.map((stock) => stock.price),
         backgroundColor: [
           "rgba(255, 99, 132, 0.5)",
           "rgba(54, 162, 235, 0.5)",
@@ -43,24 +41,36 @@ const WatchList = () => {
       },
     ],
   };
+
   return (
     <div className="watchlist-container">
-      <div className="search-container">
-        <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Search eg:infy, bse, nifty fut weekly, gold mcx"
-          className="search"
-        />
-        <span className="counts"> {watchList.length} / 50</span>
+      {/* Search bar section */}
+      <div className="search-section">
+        <h3 className="search-title">Search Watchlist</h3>
+        <div className="search-container">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Search eg: infy, bse, nifty fut weekly, gold mcx"
+            className="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span className="counts">
+            {filteredList.length} / {watchList.length}
+          </span>
+        </div>
       </div>
 
+      {/* Filtered list */}
       <ul className="list">
-        {watchList.map((stock, index) => {
-          return <WatchListItem stock={stock} key={index} />;
-        })}
+        {filteredList.map((stock, index) => (
+          <WatchListItem stock={stock} key={index} />
+        ))}
       </ul>
+
+      {/* Chart */}
       <DoughnutChart data={data} />
     </div>
   );

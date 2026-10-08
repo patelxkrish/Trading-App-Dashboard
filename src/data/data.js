@@ -12,7 +12,7 @@ export const watchList = [
     isDown: true,
   },
   {
-    name: "TCS",
+    name: "SPM",
     price: 3194.8,
     percent: "-0.25%",
     isDown: true,
@@ -150,7 +150,7 @@ export const holdings = [
     isLoss: true,
   },
   {
-    name: "TCS",
+    name: "SPM",
     qty: 1,
     avg: 3041.7,
     price: 3194.8,
